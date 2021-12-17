@@ -1,0 +1,38 @@
+apiVersion: v1
+baseDomain: {{ base_domain }}
+metadata:
+  name: {{ cluster_name }}
+platform:
+  aws:
+    region: eu-west-1
+pullSecret: '{"auths":{"ec2-46-51-150-143.eu-west-1.compute.amazonaws.com:5000": {"auth": "dGVzdHVzZXI6dGVzdHBhc3N3b3Jk","email": "test@test.com"}}}'
+sshKey: {{ ocp4_ssh_pub }}
+additionalTrustBundle: | 
+    -----BEGIN CERTIFICATE-----
+    MIIDejCCAmICCQCl0/pH1AMXQzANBgkqhkiG9w0BAQsFADB/MQswCQYDVQQGEwJF
+    UzEMMAoGA1UECAwDTWFkMQwwCgYDVQQHDANNYWQxCzAJBgNVBAoMAlJIMQwwCgYD
+    VQQLDANBcmMxFTATBgNVBAMMDGFjaWRvbnBlLmNvbTEiMCAGCSqGSIb3DQEJARYT
+    YWNpZG9ucGVAcmVkaGF0LmNvbTAeFw0yMTEyMTUxMzA4MzdaFw0yNjEyMTQxMzA4
+    MzdaMH8xCzAJBgNVBAYTAkVTMQwwCgYDVQQIDANNYWQxDDAKBgNVBAcMA01hZDEL
+    MAkGA1UECgwCUkgxDDAKBgNVBAsMA0FyYzEVMBMGA1UEAwwMYWNpZG9ucGUuY29t
+    MSIwIAYJKoZIhvcNAQkBFhNhY2lkb25wZUByZWRoYXQuY29tMIIBIjANBgkqhkiG
+    9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0A1o0qCzK7qQhzBGZvvbTd7rnKWqEHJTl6mC
+    gBioByHucEWEJn6ZE8eUyQ13e049ARsy/mSa25+KBe9FtVC8Xk0Grjzsr/x4OeoF
+    1n6WCc4AN2MwMp6JFSwxVCF2Gp9mMMakp/XLSKVDC2Gb9dfu/62m2cFMQGAVsJv5
+    TvIiktAA9cC2/CtqxXoEZ9WBHIgZQCVIYUWcpuqtAjsLofO80MxNUNQMYIQGJa/q
+    7EqraFgK6QjmJYbD+TUNkw7RHrlORc93c14C3SnkF474EyTDLEdwcYyHoGjuS+PV
+    PC8PvuZisFnXaAz0mO4lLBWaGsefAC/0Hxvbd7XAkkhKx0p0pwIDAQABMA0GCSqG
+    SIb3DQEBCwUAA4IBAQCFzAb0LLFHu/Mt32ROTl7yV+Zmpp0gh9ydI2UDaRDeGizk
+    iv2HqakbD8KfjL+g9PNdYY87dXYWpUfCa+DHTtfusT88guNPKla8INMjj+BXqyZy
+    DwwV0ZxIrMuYmKoMchwS6dkVDwGhmeSzUqsJs2dnxTkMnpCpQNTbgb0anjFikwQ9
+    VtTauR0m5XFn251bXS4W2SNs7XoZx9KD8Z0rp5ZSfJbRkwJsb+8/MwCiBxv9xkiC
+    LrknofldQkLJpTIvsYgVOs+GVAt6xfjxAn9UHdFgad6xOUnr0o51WZhKBS4lSj74
+    7cqN5LGNAiJ9F0Q+Q833hGQrUnZTl8fkl26Pmcvy
+    -----END CERTIFICATE-----
+imageContentSources: 
+  - mirrors:
+    - ec2-46-51-150-143.eu-west-1.compute.amazonaws.com:5000/ocp4/openshift4
+    source: quay.io/openshift-release-dev/ocp-release
+  - mirrors:
+    - ec2-46-51-150-143.eu-west-1.compute.amazonaws.com:5000/ocp4/openshift4
+    source: quay.io/openshift-release-dev/ocp-v4.0-art-dev

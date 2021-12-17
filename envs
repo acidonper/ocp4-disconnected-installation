@@ -1,0 +1,3 @@
+REGSVCNAME=ec2-46-51-150-143.eu-west-1.compute.amazonaws.com
+REGSVCPORT=:5000
+OCPRELEASE=4.5.8
