@@ -80,6 +80,29 @@ Once the Openshift 4 is installed, it is possible to display the pull secret inf
 oc get secret/pull-secret -n openshift-config -o yaml
 ```
 
+## Update Openshift Versions
+
+When an Openshift Cluster is installed following a disconnected strategy, it is required to perform a set of tasks in order to update the cluster to a new version. From an overall point of view, the process steps are included in the following list:
+
+- Mirror the respective new Openshift components images
+- Create a digest reference through a configmap
+- Start the update process
+
+In order to perform this procedure automatically, it is required to execute the following command:
+
+```$bash
+./99-update-cluster.sh 4.5.41
+```
+
+After few minutes, depend on the number of cluster nodes, the Openshift cluster should be updated. It is possible to ensure the status cluster version executing the following command:
+
+```$bash
+$ oc get clusterversion
+
+NAME      VERSION   AVAILABLE   PROGRESSING   SINCE   STATUS
+version   4.5.41    True        False         4m52s   Cluster version is 4.5.41
+```
+
 ## Interesting links
 
 - https://docs.openshift.com/container-platform/4.5/installing/installing-mirroring-installation-images.html#prerequisites_installing-mirroring-installation-images
