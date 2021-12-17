@@ -29,7 +29,7 @@ OCPRELEASE=4.5.8
 - Generate required certificates executing the **00-gen-certs.sh** script
 
 ```$bash
-sh 00-gen-htpasswd.sh
+sh 00-gen-certs.sh
 ```
 
 - Generate htpasswd file executing the **00-gen-htpasswd.sh** script
