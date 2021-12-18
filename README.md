@@ -137,6 +137,16 @@ spec:
         container: ose-oauth-proxy@sha256:c6791f2cedd574a5b99ea5405b9d64c81c966cdee2fabbb180beb200b849919f
 ```
 
+- Updating from 4.5.41 to 5.6.48, the following error appears:
+
+```$bash
+$ oc get clusterversion
+NAME      VERSION   AVAILABLE   PROGRESSING   SINCE   STATUS
+version   4.5.41    True        True          126m    Unable to apply 4.6.48: the cluster operator image-registry is degraded
+```
+
+NOTE: Please visit the [link](https://access.redhat.com/solutions/5370391) for more information about the solution.
+
 ## Author
 
 Asier Cidon
