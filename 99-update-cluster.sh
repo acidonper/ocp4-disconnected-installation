@@ -14,6 +14,9 @@ RELEASE_NAME='ocp-release'
 ARCHITECTURE='x86_64'
 REMOVABLE_MEDIA_PATH='/tmp'
 
+## Client mirror folder
+rm -rf /tmp/mirror
+
 ## Test the final command
 oc adm release mirror -a ${LOCAL_SECRET_JSON} --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} --to-release-image=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY}:${OCP_RELEASE}-${ARCHITECTURE} --dry-run > mirror-dryrun.log
 
@@ -23,7 +26,8 @@ oc image mirror -a ${LOCAL_SECRET_JSON} --from-dir=${REMOVABLE_MEDIA_PATH}/mirro
 
 ## Apply configuration digest confimap
 ls  /tmp/mirror/config/ | awk '{ print "oc apply -f "$1 }' | sh
-DIGEST_ID=$(cat /tmp/mirror/config/*.yaml | grep "name:" | cut -d ":" -f 2 | cut -d "-" -f 2)
+cat /tmp/mirror/config/*.yaml | jq  >> /tmp/mirror.yaml
+DIGEST_ID=$(cat /tmp/mirror.yaml | grep "name:" | cut -d ":" -f 2 | cut -d "-" -f 2)
 DIGEST='sha256:'${DIGEST_ID}
 
 ## Start the cluster update
