@@ -133,8 +133,10 @@ spec:
 - Openshift ose-oauth-proxy image can't be download because Jaeger deployment tries to use a imageTag instead of an image digest. It is required to modifiy Jaeger deployment to modify image name and tag:
 
 ```$bash
+$ oc patch deployment jaeger --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/1/image", "value":"registry.redhat.io/openshift4/ose-oauth-proxy@sha256:c6791f2cedd574a5b99ea5405b9d64c81c966cdee2fabbb180beb200b849919f"}]'
+
 ...
-        container: ose-oauth-proxy@sha256:c6791f2cedd574a5b99ea5405b9d64c81c966cdee2fabbb180beb200b849919f
+        image: registry.redhat.io/openshift4/ose-oauth-proxy@sha256:c6791f2cedd574a5b99ea5405b9d64c81c966cdee2fabbb180beb200b849919f
 ```
 
 - Updating from 4.5.41 to 5.6.48, the following error appears:
