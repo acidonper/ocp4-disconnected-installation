@@ -4,7 +4,7 @@
 ##
 
 ## Load Environment Variables
-source envs
+source ./envs
 
 ## Create requirements
 mkdir cert

@@ -10,7 +10,8 @@ It is required a virtual machine with the following requirements:
 - 50GB free (**200GB to mirror all OLM images*)
 - Software:
   - podman
-  - oc
+  - oc CLI
+  - opm CLI
   - jq
   - openssl
 
@@ -61,12 +62,20 @@ sh 02-generate-conf.sh
 - Generate the OLM catalog executing the script **03-generate-olm-catalog.sh**
 
 ```$bash
+## Openshift 4.5
+sh 03-generate-olm-catalog-v45.sh
+
+## Openshift >4.5
 sh 03-generate-olm-catalog.sh
 ```
 
 - Mirror the required images in the local registry and configure the custom OLM catalog executing the script **04-configure-operator-hub.sh**
 
 ```$bash
+## Openshift 4.5
+sh 04-configure-operator-hub-v45.sh
+
+## Openshift >4.5
 sh 04-configure-operator-hub.sh
 ```
 
@@ -108,7 +117,12 @@ version   4.5.41    True        False         4m52s   Cluster version is 4.5.41
 - https://docs.openshift.com/container-platform/4.5/installing/installing-mirroring-installation-images.html#prerequisites_installing-mirroring-installation-images
 - https://docs.openshift.com/container-platform/4.5/installing/installing_aws/installing-restricted-networks-aws-installer-provisioned.html#installation-aws-config-yaml_installing-restricted-networks-aws-installer-provisioned
 - https://docs.openshift.com/container-platform/4.5/operators/admin/olm-restricted-networks.html#olm-updating-operator-catalog-image_olm-restricted-networks
+- https://docs.openshift.com/container-platform/4.8/operators/understanding/olm-rh-catalogs.html
+### Software
 
+- OPM - https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest-4.8/opm-linux.tar.gz
+- OC - https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest-4.8/openshift-client-linux.tar.gz
+- gRPC - https://github.com/fullstorydev/grpcurl
 
 ## Issues
 

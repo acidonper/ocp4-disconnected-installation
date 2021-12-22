@@ -1,3 +1,6 @@
 REGSVCNAME=ec2-46-51-150-143.eu-west-1.compute.amazonaws.com
 REGSVCPORT=:5000
 OCPRELEASE=4.5.8
+OCPMINORRELEASE=4.5
+LOCAL_SECRET_JSON='pull-secret.json'
+OPERATORS="servicemeshoperator,cluster-logging,kiali-ossm,jaeger-product"

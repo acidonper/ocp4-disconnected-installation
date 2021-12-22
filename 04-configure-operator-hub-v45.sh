@@ -9,26 +9,16 @@ source ./envs
 ## Disable default OperatorHub
 oc patch OperatorHub cluster --type json -p '[{"op": "add", "path": "/spec/disableAllDefaultSources", "value": true}]'
 
-## Build the catalog locally
-GODEBUG=x509ignoreCN=0 oc adm catalog mirror \
-    ${REGSVCNAME}${REGSVCPORT}/olm/redhat-operator-index:v${OCPMINORRELEASE} \
-    ${REGSVCNAME}${REGSVCPORT} \
-    -a ${LOCAL_SECRET_JSON} \
-    --filter-by-os='.*' \
-    --manifests-only > /tmp/oc-adm-mirrot-olm-build.log
-INDEXID=$(grep -o "\S*manifests-redhat-operator-index\S*" /tmp/oc-adm-mirrot-olm-build.log)
-MAPPINGFILE=$INDEXID/mapping.txt
-
 ## Mirror specific containers operators
-./99-load-operator-hub.sh kiali $MAPPINGFILE
-./99-load-operator-hub.sh jaeger $MAPPINGFILE
-./99-load-operator-hub.sh mesh $MAPPINGFILE
-./99-load-operator-hub.sh logging $MAPPINGFILE
-./99-load-operator-hub.sh istio $MAPPINGFILE
-./99-load-operator-hub.sh oauth $MAPPINGFILE
+./99-load-operator-hub-v45.sh kiali
+./99-load-operator-hub-v45.sh jaeger
+./99-load-operator-hub-v45.sh mesh
+./99-load-operator-hub-v45.sh logging
+./99-load-operator-hub-v45.sh istio
+./99-load-operator-hub-v45.sh oauth
 
 ## Create the new Content Source
-oc create -f $INDEXID/imageContentSourcePolicy.yaml
+oc create -f ./redhat-operators-manifests/imageContentSourcePolicy.yaml
 
 ## Create the Catalog Source
 cat << EOF > CatalogSource.yaml
@@ -39,8 +29,8 @@ metadata:
   namespace: openshift-marketplace
 spec:
   sourceType: grpc
-  image: ${REGSVCNAME}${REGSVCPORT}/olm/redhat-operator-index:v${OCPMINORRELEASE}
-  displayName: My Operator Catalog ${OCPMINORRELEASE}
+  image: ${REGSVCNAME}${REGSVCPORT}/olm/redhat-operators:v${OCPMINORRELEASE} 
+  displayName: My Operator Catalog
   publisher: grpc
 EOF
 oc apply -f CatalogSource.yaml

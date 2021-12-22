@@ -4,17 +4,30 @@
 ##
 
 ## Load Environment Variables
-source envs
-LOCAL_SECRET_JSON='pull-secret.json'
+source ./envs
 
 ## Login the respective images registries
 podman login ${REGSVCNAME}${REGSVCPORT}
 podman login registry.redhat.io
 
-## Create the catalog
-oc adm catalog build \
-    --appregistry-org redhat-operators \
-    --from=registry.redhat.io/openshift4/ose-operator-registry:v4.5 \
-    --filter-by-os="linux/amd64" \
-    --to=${REGSVCNAME}${REGSVCPORT}/olm/redhat-operators:v1 \
-    -a ${LOCAL_SECRET_JSON} 
+# ## Load catalog image
+# podman run -p50051:50051 -d -it registry.redhat.io/redhat/redhat-operator-index:v${OCPMINORRELEASE}
+
+# ## Download index file
+# grpcurl -plaintext localhost:50051 api.Registry/ListPackages > packages.out
+
+# ## Review Operators
+# read -p "Please review packages.out for more information about the operators in the channel ${OCPMINORRELEASE} and modify env file if it is required"
+
+# ## Generate Operator Catalog
+# opm index prune \
+#     -f registry.redhat.io/redhat/redhat-operator-index:v${OCPMINORRELEASE} \
+#     -p ${OPERATORS} \
+#     -t ${REGSVCNAME}${REGSVCPORT}/olm/redhat-operator-index:v${OCPMINORRELEASE} 
+
+## Workaroung OPM client error
+podman pull registry.redhat.io/redhat/redhat-operator-index:v${OCPMINORRELEASE}
+podman tag registry.redhat.io/redhat/redhat-operator-index:v${OCPMINORRELEASE} ${REGSVCNAME}${REGSVCPORT}/olm/redhat-operator-index:v${OCPMINORRELEASE}
+
+## Pull pruned Catalog 
+podman push ${REGSVCNAME}${REGSVCPORT}/olm/redhat-operator-index:v${OCPMINORRELEASE}

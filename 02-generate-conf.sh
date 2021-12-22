@@ -4,7 +4,7 @@
 ##
 
 ## Load Environment Variables
-source envs
+source ./envs
 
 ## Added ca support
 cp ca.crt /etc/ssl/certs/
@@ -28,7 +28,6 @@ OCP_RELEASE=${OCPRELEASE}
 LOCAL_REGISTRY=${REGSVCNAME}${REGSVCPORT}
 LOCAL_REPOSITORY='ocp4/openshift4'
 PRODUCT_REPO='openshift-release-dev'
-LOCAL_SECRET_JSON='pull-secret.json'
 RELEASE_NAME='ocp-release'
 ARCHITECTURE='x86_64'
 REMOVABLE_MEDIA_PATH='/tmp'

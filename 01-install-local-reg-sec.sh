@@ -4,7 +4,7 @@
 ##
 
 ## Load Environment Variables
-source envs
+source ./envs
 
 ## Run the container
 podman run -d \
